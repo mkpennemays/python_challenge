@@ -23,18 +23,37 @@ with open(csvpath) as csvfile:
         else:
             candidate_vote_list[candidate_index] +=1
 
+#print to screen and output to file in the same block of code
+output_path = os.path.join(".", "analysis", "PollAnalysis.txt")
+text_file = open(output_path, "w")
+reportHeader = "Election Results"
+reportSeparatorLine = "------------------------------------------"
+
 print("Election Results")
-print("---------------------------------------")
+text_file.write(reportHeader + "\n")
+
+print(reportSeparatorLine)
+text_file.write(reportSeparatorLine + "\n")
+
 print(f"Total Votes: {totalVoteCount}")
-print("---------------------------------------")
+text_file.write("Total Votes: " + str(totalVoteCount) + "\n")
+
+print(reportSeparatorLine)
+text_file.write(reportSeparatorLine + "\n")
+
 candidate_index = 0
 for candidate in candidate_name_list:
     candidate_vote_share = "{:.0%}".format(candidate_vote_list[candidate_index]/totalVoteCount)
     print(f"{candidate}: {candidate_vote_share} ({candidate_vote_list[candidate_index]})")
+    text_file.write(candidate + ": " + str(candidate_vote_share) + " (" + str(candidate_vote_list[candidate_index]) + ")\n")
     candidate_index += 1
-print("---------------------------------------")
+
+print(reportSeparatorLine)
+text_file.write(reportSeparatorLine + "\n")
+
 maxVotes = max(candidate_vote_list)
 candidate_index = candidate_vote_list.index(maxVotes)
 print(f"Winner: {candidate_name_list[candidate_index]}")
-
-print("---------------------------------------")
+text_file.write("Winner: " + candidate_name_list[candidate_index] + "\n")
+print(reportSeparatorLine)
+text_file.write(reportSeparatorLine)
